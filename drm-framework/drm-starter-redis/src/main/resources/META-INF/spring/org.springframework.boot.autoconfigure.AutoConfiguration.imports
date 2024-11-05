@@ -1,0 +1,2 @@
+com.shulian.safe.drm.framework.redis.config.DrmRedisAutoConfiguration
+com.shulian.safe.drm.framework.redis.config.DrmCacheAutoConfiguration

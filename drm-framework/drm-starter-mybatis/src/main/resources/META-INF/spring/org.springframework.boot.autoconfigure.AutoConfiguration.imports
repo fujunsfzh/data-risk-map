@@ -1,0 +1,3 @@
+com.shulian.safe.drm.framework.datasource.config.DrmDataSourceAutoConfiguration
+com.shulian.safe.drm.framework.mybatis.config.DrmMybatisAutoConfiguration
+com.shulian.safe.drm.framework.translate.config.DrmTranslateAutoConfiguration

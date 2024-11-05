@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.shulian.safe</groupId>
+        <artifactId>drm-module-system</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>drm-module-system-biz</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        system 模块下，我们放通用业务，支撑上层的核心业务。
+        例如说：用户、部门、权限、数据字典等等
+    </description>
+
+    <dependencies>
+        <!-- 依赖服务 -->
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-module-system-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-biz-data-permission</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-biz-ip</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-rpc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-job</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-mq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-excel</artifactId>
+        </dependency>
+
+
+        <!-- Registry 注册中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- Config 配置中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- 三方云服务相关 -->
+        <dependency>
+            <groupId>com.xingyuv</groupId>
+            <artifactId>spring-boot-starter-justauth</artifactId> <!-- 社交登陆（例如说，个人微信、企业微信等等） -->
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>wx-java-mp-spring-boot-starter</artifactId> &lt;!&ndash; 微信登录（公众号） &ndash;&gt;
+        </dependency>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>  &lt;!&ndash; 微信登录（小程序） &ndash;&gt;
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId> <!-- 短信（阿里云） -->
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId> <!-- 短信（阿里云） -->
+        </dependency>
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java-sms</artifactId> <!-- 短信（腾讯云） -->
+        </dependency>
+
+        <dependency>
+            <!-- 验证码，一般用于登录使用 -->
+            <groupId>com.xingyuv</groupId>
+            <artifactId>spring-boot-starter-captcha-plus</artifactId>
+        </dependency>
+
+        <!--暂时先留着，可能有用，读取库表结构-->
+        <dependency>
+            <!-- 代码生成器，使用它解析表结构 -->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+        </dependency>
+        <dependency>
+            <!-- 实现代码生成 -->
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+        </dependency>
+
+        <!-- 三方云服务相关 -->
+        <dependency>
+            <!-- 文件客户端：解决 ftp 连接 -->
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+        </dependency>
+        <dependency>
+            <!-- 文件客户端：解决 sftp 连接 -->
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+        </dependency>
+        <dependency>
+            <!-- 文件客户端：解决阿里云、腾讯云、minio 等 S3 连接 -->
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- 文件客户端：文件类型的识别 -->
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

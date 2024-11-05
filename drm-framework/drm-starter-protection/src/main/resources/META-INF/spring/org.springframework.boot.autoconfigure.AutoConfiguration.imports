@@ -1,0 +1,4 @@
+com.shulian.safe.drm.framework.idempotent.config.DrmIdempotentConfiguration
+com.shulian.safe.drm.framework.lock4j.config.DrmLock4jConfiguration
+com.shulian.safe.drm.framework.ratelimiter.config.DrmRateLimiterConfiguration
+com.shulian.safe.drm.framework.signature.config.DrmApiSignatureAutoConfiguration

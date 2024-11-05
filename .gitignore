@@ -1,0 +1,32 @@
+
+# 查看更多 .gitignore 配置 -> https://help.github.com/articles/ignoring-files/
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.class
+target/*
+
+
+
+
+
+.xcodemap/
+logs/
+
+
+### drm-ui-admin-vue3###
+drm-ui-admin-vue3/node_modules
+drm-ui-admin-vue3/.DS_Store
+drm-ui-admin-vue3/dist
+drm-ui-admin-vue3/dist-ssr
+drm-ui-admin-vue3/dist*
+drm-ui-admin-vue3/pnpm-debug
+drm-ui-admin-vue3/auto-*.d.ts
+drm-ui-admin-vue3/.idea
+drm-ui-admin-vue3/.history

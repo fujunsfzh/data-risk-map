@@ -1,0 +1,3 @@
+com.shulian.safe.drm.framework.datapermission.config.DrmDataPermissionAutoConfiguration
+com.shulian.safe.drm.framework.datapermission.config.DrmDeptDataPermissionAutoConfiguration
+com.shulian.safe.drm.framework.datapermission.config.DrmDataPermissionRpcAutoConfiguration

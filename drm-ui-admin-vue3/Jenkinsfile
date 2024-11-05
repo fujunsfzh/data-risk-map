@@ -1,0 +1,156 @@
+pipeline {
+    agent any
+    parameters {
+    // 定义参数
+        choice(
+            name: 'env',
+            choices: ['local','dev','test','stage','prod'],
+            description: ""
+        )
+    }
+    environment {
+        PROFILES_ACTIVE = "${params.env}"
+    }
+    stages {
+        stage('清理工作空间'){
+            steps {
+                cleanWs()
+            }
+        }
+        stage('git仓库拉取代码') {
+            steps {
+                echo "[git参数] -> ${branchOnTag}"
+                checkout scmGit(branches: [[name: '$branchOnTag']], extensions: [], userRemoteConfigs: [[credentialsId: '663929ca-e2a5-49ae-a9c4-b7ca3d99a1aa', url: 'http://10.0.3.160:16380/shulian/drm-ui-admin-vue3.git']])
+                echo '[代码拉取完成]'
+            }
+        }
+        stage('node编译打包') {
+            steps {
+                sh 'pwd'
+                sh 'npm config set registry https://registry.npmmirror.com'
+                sh 'npm install -g pnpm'
+                sh 'pnpm install'
+                // sh 'npm run build:dev'
+                sh "npm run build:${params.env}"
+                echo '[node打包完成]'
+            }
+        }
+        stage('sonar检查') {
+            steps {
+                echo '[忽略sonar检查...]'
+            }
+        }
+        stage('构建docker镜像') {
+            steps {
+                echo '忽略构建docker镜像...'
+            }
+        }
+        stage('存储harbor仓库') {
+            steps {
+                echo '忽略存储harbor仓库...'
+            }
+        }
+        stage('部署开发环境服务') {
+            when {
+                expression { return env.PROFILES_ACTIVE == 'dev' }
+            }
+            steps {
+                echo "当前任务名称 -> ${JOB_NAME}"
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc (
+                        configName: '开发环境-10.0.3.162',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: false,
+                                excludes: '',
+                                execCommand: '''
+                                    cd /usr/local/jk_project/
+                                    rm -rf $JOB_NAME
+                                    mkdir -p $JOB_NAME
+                                    cd $JOB_NAME
+                                    mv /usr/local/jk_project/tmp/$JOB_NAME/** ./
+                                    nginx -s reload
+                                ''',
+                                execTimeout: 120000,
+                                // 是否扁平化目录结构
+                                flatten: false,
+                                // 是否创建空目录
+                                makeEmptyDirs: false,
+                                // 是否排除默认的文件
+                                noDefaultExcludes: false,
+                                // 文件分隔符 逗号或空格都可以
+                                patternSeparator: '[, ]+',
+                                // 远程目录为空，表示使用默认目录
+                                remoteDirectory: 'drm-ui-admin-vue3',
+                                // 是否使用远程目录的安全数据格式
+                                remoteDirectorySDF: false,
+                                // 去除远程文件前缀
+                                removePrefix: '',
+                                sourceFiles: 'dist/**'
+                            )
+                        ],
+                        usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
+                    ]
+                )
+                echo '[开发环境部署完成]'
+            }
+            post {
+                success {
+                    script {
+                        def servers = ['remote_ip1','remote_ip2']
+                        servers.each { server ->
+                            echo "后置操作: ${server}"
+                        }
+                    }
+                }
+            }
+        }
+        stage('部署预发环境服务') {
+            when {
+                expression { return env.PROFILES_ACTIVE == 'pre' }
+            }
+            steps {
+               echo "当前任务名称 -> ${JOB_NAME}"
+               sshPublisher(
+                   publishers: [
+                       sshPublisherDesc (
+                       configName: '预发环境-10.0.3.163',
+                       transfers: [
+                           sshTransfer(
+                               cleanRemote: false,
+                               excludes: '',
+                               execCommand: '''
+                                    cd /usr/local/jk_project/
+                                    rm -rf $JOB_NAME
+                                    mkdir -p $JOB_NAME
+                                    cd $JOB_NAME
+                                    mv /usr/local/jk_project/tmp/$JOB_NAME/** ./
+                                    nginx -s reload
+                               ''',
+                                execTimeout: 120000,
+                                // 是否扁平化目录结构
+                                flatten: false,
+                                // 是否创建空目录
+                                makeEmptyDirs: false,
+                                // 是否排除默认的文件
+                                noDefaultExcludes: false,
+                                // 文件分隔符 逗号或空格都可以
+                                patternSeparator: '[, ]+',
+                                // 远程目录为空，表示使用默认目录
+                                remoteDirectory: 'drm-ui-admin-vue3',
+                                // 是否使用远程目录的安全数据格式
+                                remoteDirectorySDF: false,
+                                // 去除远程文件前缀
+                                removePrefix: '',
+                                sourceFiles: 'dist/**'
+                           )
+                       ],
+                       usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
+                   ]
+               )
+               echo '[预发环境部署完成]'
+            }
+        }
+    }
+}

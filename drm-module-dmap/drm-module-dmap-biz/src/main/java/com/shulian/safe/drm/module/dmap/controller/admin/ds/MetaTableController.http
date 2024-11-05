@@ -1,0 +1,5 @@
+
+### 分页列表
+GET {{mapBaseUrl}}/v1/meta/tb/page?type=&status=&pageNo=2&pageSize=3
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{token}}

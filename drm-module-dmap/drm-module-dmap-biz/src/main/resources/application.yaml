@@ -1,0 +1,141 @@
+spring:
+  profiles:
+    #active: local
+    active: @profileActive@
+  application:
+    name: dmap-server
+  main:
+    # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+    allow-circular-references: true
+    # 允许 Bean 覆盖，例如说 Feign 等会存在重复定义的服务
+    allow-bean-definition-overriding: true
+
+  config:
+    import:
+      - optional:classpath:application-${spring.profiles.active}.yaml # 加载【本地】配置
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yaml # 加载【Nacos】的配置
+
+  # Servlet 配置
+  servlet:
+    # 文件上传相关配置项
+    multipart:
+      # 单个文件大小
+      max-file-size: 16MB
+      # 设置总上传的文件大小
+      max-request-size: 32MB
+
+  # Jackson 配置项
+  jackson:
+    serialization:
+      # 设置 LocalDateTime 的格式，使用时间戳
+      write-dates-as-timestamps: true
+      # 设置不使用 nanoseconds 的格式。例如说 1611460870.401，而是直接 1611460870401
+      write-date-timestamps-as-nanoseconds: false
+      # 设置 Duration 的格式，使用时间戳
+      write-durations-as-timestamps: true
+      # 允许序列化无属性的 Bean
+      #fail-on-empty-beans: false
+      fail-on-empty-beans: true
+
+  # Cache 配置项
+  cache:
+    type: REDIS
+    redis:
+      # 设置过期时间为 1 小时
+      time-to-live: 1h
+
+server:
+  port: 48082
+
+--- #################### 日志相关配置 ####################
+logbook:
+  include:
+    - /**
+  format.style: curl
+  write:
+    category: http-trace
+    level: INFO
+
+--- #################### 接口文档配置 ####################
+
+springdoc:
+  api-docs:
+    # 是否开启 Swagger 接文档的元数据
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    #是否开启 Swagger 文档的官方 UI 界面
+    enabled: true
+    path: /swagger-ui
+  # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+  # 修改成 true 后 get 请求正常，但 post 请求全是 x-www-form-urlencoded
+  #default-flat-param-object: true
+
+  # 改为 false 后，post 请求是 raw，但 get 请求显示异常
+  default-flat-param-object: false
+
+knife4j:
+  #是否开启 Swagger 文档的 Knife4j UI 界面
+  enable: true
+  setting:
+    language: zh_cn
+
+# MyBatis Plus 的配置项
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true # 虽然默认为 true ，但是还是显示去指定下。
+  global-config:
+    db-config:
+      id-type: AUTO # 自增 ID，适合 MySQL 等直接自增的数据库
+    # 关闭控制台的 Banner 打印
+    banner: false
+  #entity
+  type-aliases-package: com.shulian.safe.drm.module.dmap.entity
+  encryptor:
+    # 加解密的秘钥，可使用 https://www.imaegoo.com/2020/aes-key-generator/ 网站生成
+    #password: XDV71a+xqStEA3WH
+    password: Wr2BM6WzNjln8ZtP
+
+
+mybatis-plus-join:
+  # 关闭控制台的 Banner 打印
+  banner: false
+
+# Spring Data Redis 配置
+spring:
+  data:
+    redis:
+      repositories:
+        # 项目未使用到 Spring Data Redis 的 Repository，所以直接禁用，保证启动速度
+        enabled: false
+
+# VO 转换（数据翻译）相关
+easy-trans:
+  # 启用全局翻译（拦截所有 SpringMVC ResponseBody 进行自动翻译 )。如果对于性能要求很高可关闭此配置，或通过 @IgnoreTrans 忽略某个接口
+  is-enable-global: true
+
+--- #################### RPC 远程调用相关配置 ####################
+
+--- #################### 消息队列相关 ####################
+
+--- #################### 定时任务相关配置 ####################
+
+--- #################### 验证码相关配置 ####################
+
+--- #################### 系统相关配置 ####################
+
+drm:
+  info:
+    version: 1.0.0
+    #必须定义，好多配置里面会用到
+    base-package: com.shulian.safe.drm
+  web:
+    secondServiceNamePrefix: dmap
+  xss:
+    enable: true
+    exclude-urls: # 如下 url，仅仅是为了演示，去掉配置也没关系
+      - ${management.endpoints.web.base-path}/** # 不处理 Actuator 的请求
+  swagger:
+    title: 数据地图
+    description: 数据资产的扫描、梳理
+    version: ${drm.info.version}

@@ -1,0 +1,6 @@
+com.shulian.safe.drm.framework.apilog.config.DrmApiLogAutoConfiguration
+com.shulian.safe.drm.framework.jackson.config.DrmJacksonAutoConfiguration
+com.shulian.safe.drm.framework.swagger.config.DrmSwaggerAutoConfiguration
+com.shulian.safe.drm.framework.web.config.DrmWebAutoConfiguration
+com.shulian.safe.drm.framework.apilog.config.DrmApiLogRpcAutoConfiguration
+com.shulian.safe.drm.framework.banner.config.DrmBannerAutoConfiguration

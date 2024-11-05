@@ -1,0 +1,66 @@
+
+
+### 创建探查任务 /admin-api/v1/sc/task/create
+POST {{mapBaseUrl}}/v1/sc/task/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 100,
+  "name":"test",
+  "ip": "10.0.3.1/24",
+  "port": "80,443,3306-3310",
+  "type": 2,
+  "cron": "0/5 * * * * ?",
+  "triggerStartTime": "2024-09-12 16:20:00",
+  "triggerEndTime": "2025-09-12 16:20:00",
+  "retryCount": 1,
+  "retryInterval": 10
+}
+
+### 探查任务分页 /admin-api/v1/sc/task/page
+GET {{mapBaseUrl}}/v1/sc/task/page?type=&status=&pageNo=1&pageSize=10
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{token}}
+
+
+
+### 修改探查任务 /admin-api/v1/sc/task/update
+POST {{mapBaseUrl}}/v1/sc/task/update
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 100,
+  "name":"test",
+  "ip": "10.0.3.1/24",
+  "port": "80,443,3306-3310",
+  "type": 1,
+  "cron": "0/5 * * * * ?",
+  "triggerStartTime": "2024-09-12 16:20:00",
+  "triggerEndTime": "2025-09-12 16:20:00",
+  "retryCount": 1,
+  "retryInterval": 10
+}
+
+
+### 修改任务状态 /admin-api/v1/sc/task/update/status
+PUT {{mapBaseUrl}}/v1/sc/task/update/status
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{token}}
+
+id=100&status=2
+
+
+### 删除探查任务 /admin-api/v1/sc/task/delete/{id}
+PUT {{mapBaseUrl}}/v1/sc/task/delete/101
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{token}}
+
+
+
+### 查看任务详情 /admin-api/v1/sc/task/info
+GET {{mapBaseUrl}}/v1/sc/task/info?id=100
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{token}}
+

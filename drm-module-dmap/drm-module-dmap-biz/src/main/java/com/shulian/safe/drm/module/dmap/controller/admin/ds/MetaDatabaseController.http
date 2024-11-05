@@ -1,0 +1,210 @@
+
+
+###################################################################################################
+### 创建数据源 mysql
+POST {{mapBaseUrl}}/v1/meta/ds/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "测试源",
+  "dbType": "mysql",
+  "dbHost": "10.0.3.161",
+  "dbPort": 3306,
+  "dbName": "userinfo",
+  "dbNameList": ["mark_test","userinfo","user","new_test"],
+  "extParams": "remarks=true",
+  "dbUser": "root",
+  "dbPwd": "root123",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+### 创建数据源 oracle
+POST {{mapBaseUrl}}/v1/meta/ds/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "测试源",
+  "dbType": "oracle",
+  "dbHost": "10.0.3.166",
+  "dbPort": 1521,
+  "dbNameList": ["orcl"],
+  "extParams": "remarks=true",
+  "dbUser": "dsproot",
+  "dbPwd": "dsproot",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+### 创建数据源 sqlserver
+POST {{mapBaseUrl}}/v1/meta/ds/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "测试源",
+  "dbType": "sqlserver",
+  "dbHost": "10.0.3.165",
+  "dbPort": 1433,
+  "dbNameList": ["user_test"],
+  "extParams": "",
+  "dbUser": "sa",
+  "dbPwd": "mssql_FrC5be",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+### 创建数据源 pgsql
+POST {{mapBaseUrl}}/v1/meta/ds/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "测试源",
+  "dbType": "postgresql",
+  "dbHost": "10.0.3.165",
+  "dbPort": 5432,
+  "dbNameList": ["test_user"],
+  "extParams": "",
+  "dbUser": "user_KHHXAr",
+  "dbPwd": "password_ABC5CW",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+### 创建数据源 dm
+POST {{mapBaseUrl}}/v1/meta/ds/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "测试源",
+  "dbType": "dm",
+  "dbHost": "10.0.3.166",
+  "dbPort": 5236,
+  "dbNameList": ["SYSDBA"],
+  "extParams": "remarks=true",
+  "dbUser": "SYSDBA",
+  "dbPwd": "SYSDBA",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+###################################################################################################
+
+### 修改数据源 mysql
+POST {{mapBaseUrl}}/v1/meta/ds/update
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 115,
+  "name": "测试源",
+  "dbType": "mysql",
+  "dbHost": "10.0.3.161",
+  "dbPort": 3306,
+  "dbNameList": ["userinfo"],
+  "extParams": "remarks=true",
+  "dbUser": "root",
+  "dbPwd": "root123",
+  "dboType": 1,
+  "appName": "ERP 系统",
+  "appEnv": "dev",
+  "appContact": "张三",
+  "appContactPhone": "123123123",
+  "appContactAddress": "北京市海淀区"
+}
+
+###################################################################################################
+### 查询schema mysql
+POST {{mapBaseUrl}}/v1/meta/ds/schemas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dbType": "mysql",
+  "dbHost": "10.0.3.161",
+  "dbPort": 3306,
+  "dbUser": "root",
+  "dbPwd": "root123"
+}
+
+
+### 查询schema oracle
+POST {{mapBaseUrl}}/v1/meta/ds/schemas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dbType": "oracle",
+  "dbHost": "10.0.3.166",
+  "dbPort": 1521,
+  "dbName": "orcl",
+  "dbUser": "dsproot",
+  "dbPwd": "dsproot",
+  "dboType": 1
+}
+
+
+### 查询schema sqlserver
+POST {{mapBaseUrl}}/v1/meta/ds/schemas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dbType": "sqlserver",
+  "dbHost": "10.0.3.165",
+  "dbPort": 1433,
+  "dbUser": "sa",
+  "dbPwd": "mssql_FrC5be"
+}
+
+
+### 查询schema pgsql
+POST {{mapBaseUrl}}/v1/meta/ds/schemas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dbType": "postgresql",
+  "dbHost": "10.0.3.165",
+  "dbPort": 5432,
+  "dbUser": "user_KHHXAr",
+  "dbPwd": "password_ABC5CW"
+}
+
+### 查询schema DM
+POST {{mapBaseUrl}}/v1/meta/ds/schemas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dbType": "dm",
+  "dbHost": "10.0.3.166",
+  "dbPort": 5236,
+  "dbUser": "SYSDBA",
+  "dbPwd": "SYSDBA"
+}
+

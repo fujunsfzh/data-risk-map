@@ -1,0 +1,169 @@
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: system-server
+  main:
+    allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+    allow-bean-definition-overriding: true # 允许 Bean 覆盖，例如说 Feign 等会存在重复定义的服务
+
+  config:
+    import:
+      - optional:classpath:application-${spring.profiles.active}.yaml # 加载【本地】配置
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yaml # 加载【Nacos】的配置
+
+  # Servlet 配置
+  servlet:
+    # 文件上传相关配置项
+    multipart:
+      max-file-size: 16MB # 单个文件大小
+      max-request-size: 32MB # 设置总上传的文件大小
+
+  # Jackson 配置项
+  jackson:
+    serialization:
+      # 设置 LocalDateTime 的格式，使用时间戳
+      write-dates-as-timestamps: true
+      # 设置不使用 nanoseconds 的格式。例如说 1611460870.401，而是直接 1611460870401
+      write-date-timestamps-as-nanoseconds: false
+      # 设置 Duration 的格式，使用时间戳
+      write-durations-as-timestamps: true
+      # 允许序列化无属性的 Bean
+      fail-on-empty-beans: false
+
+  # Cache 配置项
+  cache:
+    type: REDIS
+    redis:
+      time-to-live: 1h # 设置过期时间为 1 小时
+
+server:
+  port: 48081
+
+--- #################### 日志相关配置 ####################
+logbook:
+  include:
+    - /**
+  format.style: curl
+  write:
+    category: http-trace
+    level: INFO
+
+--- #################### 接口文档配置 ####################
+
+springdoc:
+  api-docs:
+    # 1. 是否开启 Swagger 接文档的元数据
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    # 2.1 是否开启 Swagger 文档的官方 UI 界面
+    enabled: true
+    path: /swagger-ui
+  # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+  default-flat-param-object: true
+
+knife4j:
+  # 2.2 是否开启 Swagger 文档的 Knife4j UI 界面
+  enable: true
+  setting:
+    language: zh_cn
+
+# MyBatis Plus 的配置项
+mybatis-plus:
+  configuration:
+    # 虽然默认为 true ，但是还是显示去指定下。
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # “智能”模式，基于 IdTypeEnvironmentPostProcessor + 数据源的类型，自动适配成 AUTO、INPUT 模式。
+      id-type: NONE
+      #      id-type: AUTO # 自增 ID，适合 MySQL 等直接自增的数据库
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+    # 关闭控制台的 Banner 打印
+    banner: false
+  type-aliases-package: ${drm.info.base-package}.dal.dataobject
+  encryptor:
+    # 加解密的秘钥，可使用 https://www.imaegoo.com/2020/aes-key-generator/ 网站生成
+    #password: XDV71a+xqStEA3WH
+    password: Wr2BM6WzNjln8ZtP
+
+mybatis-plus-join:
+  banner: false # 关闭控制台的 Banner 打印
+
+# Spring Data Redis 配置
+spring:
+  data:
+    redis:
+      repositories:
+        # 项目未使用到 Spring Data Redis 的 Repository，所以直接禁用，保证启动速度
+        enabled: false
+
+# VO 转换（数据翻译）相关
+easy-trans:
+  # 启用全局翻译（拦截所有 SpringMVC ResponseBody 进行自动翻译 )。如果对于性能要求很高可关闭此配置，或通过 @IgnoreTrans 忽略某个接口
+  is-enable-global: true
+
+--- #################### RPC 远程调用相关配置 ####################
+
+--- #################### 消息队列相关 ####################
+
+--- #################### 定时任务相关配置 ####################
+
+--- #################### 验证码相关配置 ####################
+
+aj:
+  captcha:
+    # 滑动验证，底图路径，不配置将使用默认图片；以 classpath: 开头，取 resource 目录下路径
+    jigsaw: classpath:images/jigsaw
+    # 滑动验证，底图路径，不配置将使用默认图片；以 classpath: 开头，取 resource 目录下路径
+    pic-click: classpath:images/pic-click
+    # 缓存 local/redis...
+    cache-type: redis
+    # local 缓存的阈值,达到这个值，清除缓存
+    cache-number: 1000
+    # local定时清除过期缓存(单位秒),设置为0代表不执行
+    timing-clear: 180
+    #type: blockPuzzle # 验证码类型 default两种都实例化。 blockPuzzle 滑块拼图 clickWord 文字点选
+    #water-mark:  # 右下角水印文字(我的水印)，可使用 https://tool.chinaz.com/tools/unicode.aspx 中文转 Unicode，Linux 可能需要转 unicode
+    # 验证码类型 default两种都实例化。 blockPuzzle 滑块拼图 clickWord 文字点选
+    type: default
+    # 右下角水印文字(我的水印)，可使用 https://tool.chinaz.com/tools/unicode.aspx 中文转 Unicode，Linux 可能需要转 unicode
+    water-mark:
+    # 滑动干扰项(0/1/2)
+    interference-options: 0
+    # 接口请求次数一分钟限制是否开启 true|false
+    req-frequency-limit-enable: false
+    # 验证失败5次，get接口锁定
+    req-get-lock-limit: 5
+    # 验证失败后，锁定时间间隔
+    req-get-lock-seconds: 10
+    # get 接口一分钟内请求数限制
+    req-get-minute-limit: 30
+    # check 接口一分钟内请求数限制
+    req-check-minute-limit: 60
+    # verify 接口一分钟内请求数限制
+    req-verify-minute-limit: 60
+
+--- #################### 系统相关配置 ####################
+
+drm:
+  info:
+    version: 1.0.0
+    base-package: com.shulian.safe.drm.module.system
+  xss:
+    enable: true
+    exclude-urls: # 如下 url，仅仅是为了演示，去掉配置也没关系
+      - ${management.endpoints.web.base-path}/** # 不处理 Actuator 的请求
+  swagger:
+    title: 管理后台
+    description: 提供管理员管理的所有功能
+    version: ${drm.info.version}
+  # 生成代码页面用
+  codegen:
+    base-package: com.shulian.safe.drm
+    db-schemas: ${spring.datasource.dynamic.datasource.master.name}
+    front-type: 10 # 前端模版的类型，参见 CodegenFrontTypeEnum 枚举类

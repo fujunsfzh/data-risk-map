@@ -1,0 +1,3 @@
+com.shulian.safe.drm.framework.mq.redis.config.DrmRedisMQProducerAutoConfiguration
+com.shulian.safe.drm.framework.mq.redis.config.DrmRedisMQConsumerAutoConfiguration
+com.shulian.safe.drm.framework.mq.rabbitmq.config.DrmRabbitMQAutoConfiguration

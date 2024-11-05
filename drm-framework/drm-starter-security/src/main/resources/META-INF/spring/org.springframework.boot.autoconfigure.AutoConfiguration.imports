@@ -1,0 +1,5 @@
+com.shulian.safe.drm.framework.security.config.DrmSecurityRpcAutoConfiguration
+com.shulian.safe.drm.framework.security.config.DrmSecurityAutoConfiguration
+com.shulian.safe.drm.framework.security.config.DrmWebSecurityConfigurerAdapter
+com.shulian.safe.drm.framework.operatelog.config.DrmOperateLogConfiguration
+com.shulian.safe.drm.framework.operatelog.config.DrmOperateLogRpcAutoConfiguration

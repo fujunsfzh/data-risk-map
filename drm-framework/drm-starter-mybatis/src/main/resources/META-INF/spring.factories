@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.shulian.safe.drm.framework.mybatis.config.IdTypeEnvironmentPostProcessor

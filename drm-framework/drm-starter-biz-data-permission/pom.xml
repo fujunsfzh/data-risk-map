@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>drm-framework</artifactId>
+        <groupId>com.shulian.safe</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>drm-starter-biz-data-permission</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>数据权限</description>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-common</artifactId>
+        </dependency>
+        <!-- 需要使用它，进行数据权限的获取 -->
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-module-system-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 可选，如果使用 DeptDataPermissionRule 必须提供 -->
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-security</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shulian.safe</groupId>
+            <artifactId>drm-starter-rpc</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>

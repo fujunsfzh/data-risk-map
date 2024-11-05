@@ -1,0 +1,2 @@
+com.shulian.safe.drm.framework.quartz.config.DrmQuartzAutoConfiguration
+com.shulian.safe.drm.framework.quartz.config.DrmAsyncAutoConfiguration

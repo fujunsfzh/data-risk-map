@@ -8,17 +8,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <!--<module>drm-module-system-api</module>-->
-        <module>drm-module-system-biz</module>
-    </modules>
     <artifactId>drm-module-system</artifactId>
+    <version>0.0.1-free-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>${project.artifactId}</name>
     <description>
         system 模块下，我们放通用业务，支撑上层的核心业务。
         例如说：用户、部门、权限、数据字典等等
     </description>
 
+    <modules>
+        <!--<module>drm-module-system-api</module>-->
+        <module>drm-module-system-biz</module>
+    </modules>
 </project>

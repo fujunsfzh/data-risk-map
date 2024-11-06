@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.shulian.safe</groupId>
         <artifactId>drm-module-system</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-free-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>drm-module-system-biz</artifactId>
     <packaging>jar</packaging>
-
     <name>${project.artifactId}</name>
     <description>
         system 模块下，我们放通用业务，支撑上层的核心业务。
@@ -22,7 +21,7 @@
         <dependency>
             <groupId>com.shulian.safe</groupId>
             <artifactId>drm-module-system-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1-free-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.shulian.safe</groupId>
